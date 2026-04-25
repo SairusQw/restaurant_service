@@ -25,7 +25,9 @@ class Dish(models.Model):
 
 
 class Cook(AbstractUser):
-    years_for_experience = models.IntegerField()
+    years_of_experience = models.IntegerField(
+        null=True, blank=True
+    )
 
     class Meta:
         verbose_name = "cook"
@@ -46,3 +48,6 @@ class DishIngredient(models.Model):
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     amount = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.ingredient.name} для {self.dish.name} ({self.amount})"
