@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold m-0">Menu Management</h2>
+    <a href="{% url 'restourant:dish-create' %}" class="btn btn-primary rounded-pill shadow-sm">
+        <i class="fas fa-plus me-1"></i> Add Dish
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4 p-3">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-10">{{ search_form|crispy }}</div>
+        <div class="col-md-2"><button type="submit" class="btn btn-dark w-100 rounded-pill">Search</button></div>
+    </form>
+</div>
+
+<div class="row">
+    {% for dish in dish_list %}
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm transition-hover">
+            <div class="card-body">
+                <span class="badge bg-light text-primary border mb-2">{{ dish.dish_type.name }}</span>
+                <h4 class="card-title fw-bold">{{ dish.name }}</h4>
+                <p class="text-muted small mb-4">{{ dish.description|truncatechars:70 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="h5 mb-0 fw-bold text-success">${{ dish.price }}</span>
+                    <a href="{% url 'restourant:dish-detail' pk=dish.id %}" class="btn btn-outline-primary btn-sm rounded-pill">Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% include "includes/pagination.html" %}
+{% endblock %}

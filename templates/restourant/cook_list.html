@@ -1,0 +1,43 @@
+{{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-5 mt-2">
+    <h1 class="fw-bold h2">Our Cooks</h1>
+    <a href="{% url 'restourant:cook-create' %}" class="btn btn-primary rounded-pill px-4 shadow-sm">
+      <i class="fas fa-plus me-2"></i>Register Cook
+    </a>
+  </div>
+  <div class="card border-0 shadow-sm mb-4 p-3">
+    <form method="get" class="row g-2 align-items-center">
+      <div class="col-md-10">
+        {{ search_form.username|as_crispy_field }}
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100 rounded-pill">Search</button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    {% for cook in cook_list %}
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100 text-center border-0 shadow-sm p-3">
+          <div class="mt-2"><i class="fas fa-user-circle fa-4x text-light-emphasis"></i></div>
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ cook.username }}</h5>
+            <p class="badge {% if cook.is_staff %}bg-danger{% else %}bg-secondary{% endif %} rounded-pill">
+              {% if cook.is_staff %}Admin{% else %}Cook{% endif %}
+            </p>
+            <div class="bg-light rounded p-2 mb-3 mt-2">
+              <small class="text-muted d-block">Experience</small>
+              <span class="fw-bold">{{ cook.years_of_experience }} years</span>
+            </div>
+            <a href="{% url 'restourant:cook-detail' pk=cook.id %}"
+               class="btn btn-dark btn-sm w-100 rounded-pill shadow-sm">View Profile</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% include "includes/pagination.html" %}
+{% endblock %}
