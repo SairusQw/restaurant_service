@@ -1,0 +1,105 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    min-height: 100vh;
+    background: #212529;
+    color: white;
+    padding-top: 20px;
+}
+
+.sidebar .nav-link {
+    color: #adb5bd;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin: 5px 15px;
+    transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background: #343a40;
+    color: #fff;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+/* Main Content Area */
+.content-area {
+    padding: 30px;
+}
+
+/* Glassmorphism Effect for Cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn-primary {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+/* Ефект при наведенні на картку */
+.transition-hover {
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.transition-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12) !important;
+}
+
+/* Кольори для інгредієнтів */
+.bg-soft-success {
+    background-color: #e8f5e9;
+}
+
+/* Стилізація активного пункту меню */
+.sidebar .nav-link.active {
+    background-color: #0d6efd !important;
+    color: white !important;
+}
+
+/* Прибираємо дефолтні підкреслення */
+a { text-decoration: none; }
+/* Додаємо відступ для всієї основної зони контенту */
+main.content-area {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+}
+
+/* Робимо заголовки більш виразними та відступаємо їх від контенту */
+h1, h2.fw-bold {
+    margin-bottom: 1.5rem;
+    color: #212529;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Щоб він був над іншими елементами */
+    padding: 0; /* Прибираємо внутрішні відступи, якщо вони заважають */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    background-color: #212529;
+}
+
+.sidebar .position-sticky {
+    padding-top: 20px; /* Відступ для іконки/логотипа всередині сайдбару */
+}
+
+/* Контентна частина з відступом від верху */
+main {
+    padding-top: 48px !important; /* Ось цей відступ опустить "Our Cooks" вниз */
+}

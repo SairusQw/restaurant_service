@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="card border-0 shadow-sm p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold mb-0"><i class="fas fa-carrot text-warning me-2"></i> Ingredients</h3>
+      <a href="{% url 'restourant:ingredient-create' %}" class="btn btn-success btn-sm rounded-pill px-3 shadow-sm">
+        <i class="fas fa-plus"></i> Add New
+      </a>
+    </div>
+    <div class="card border-0 shadow-sm mb-4 p-3">
+      <form method="get" class="row g-2 align-items-center">
+        <div class="col-md-10">
+          {{ search_form.name|as_crispy_field }}
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-dark w-100 rounded-pill">Search</button>
+        </div>
+      </form>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+        <tr>
+          <th class="ps-4">Ingredient Name</th>
+          <th class="text-end pe-4">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for ingredient in ingredient_list %}
+          <tr>
+            <td class="fw-semibold ps-4">{{ ingredient.name }}</td>
+            <td class="text-end pe-4">
+              <a href="{% url 'restourant:ingredient-update' pk=ingredient.id %}"
+                 class="btn btn-outline-primary btn-sm border-0 me-2"
+                 title="Edit">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="{% url 'restourant:ingredient-delete' pk=ingredient.id %}"
+                 class="btn btn-outline-danger btn-sm border-0"
+                 title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="2" class="text-center text-muted py-4">No ingredients found.</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% include "includes/pagination.html" %}
+{% endblock %}

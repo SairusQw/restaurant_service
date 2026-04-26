@@ -1,0 +1,49 @@
+{{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-lg overflow-hidden">
+            <div class="bg-dark p-5 text-white text-center">
+                <span class="badge bg-primary mb-2">{{ dish.dish_type.name }}</span>
+                <h1 class="fw-bold">{{ dish.name }}</h1>
+                <p class="lead opacity-75">${{ dish.price }}</p>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5 class="fw-bold border-bottom pb-2">Description</h5>
+                        <p class="text-muted">{{ dish.description|default:"No description provided." }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="fw-bold border-bottom pb-2">Ingredients</h5>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            {% for ingredient in dish.ingredients.all %}
+                                <span class="badge bg-soft-success text-success border border-success-subtle rounded-pill">
+                                    <i class="fas fa-leaf me-1"></i> {{ ingredient.name }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold border-bottom pb-2">Cooks specialized in this dish</h5>
+                <ul class="list-group list-group-flush mb-4">
+                    {% for cook in dish.cooks.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            {{ cook.username }}
+                            <a href="{% url 'restourant:cook-detail' pk=cook.id %}" class="btn btn-sm btn-link">View profile</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'restourant:dish-update' pk=dish.id %}" class="btn btn-warning rounded-pill px-4 shadow-sm">Edit</a>
+                    <a href="{% url 'restourant:dish-delete' pk=dish.id %}" class="btn btn-outline-danger rounded-pill px-4">Delete</a>
+                    <a href="{% url 'restourant:dish-list' %}" class="btn btn-link text-muted ms-auto">Back to Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

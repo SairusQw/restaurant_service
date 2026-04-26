@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card border-0 shadow-sm text-center p-4">
+            <i class="fas fa-user-circle fa-6x text-primary mb-3"></i>
+            <h3 class="fw-bold">{{ cook.username }}</h3>
+            <p class="text-muted">{{ cook.first_name }} {{ cook.last_name }}</p>
+            <div class="bg-light rounded p-3 mb-3">
+                <small class="text-muted d-block text-uppercase fw-bold">Experience</small>
+                <span class="h4 fw-bold">{{ cook.years_of_experience }} years</span>
+            </div>
+            <a href="{% url 'restourant:cook-update' pk=cook.id %}" class="btn btn-dark w-100 rounded-pill mb-2">Update Experience</a>
+            <a href="{% url 'restourant:cook-delete' pk=cook.id %}" class="btn btn-outline-danger btn-sm w-100 rounded-pill">Delete Account</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm p-4">
+            <h4 class="fw-bold mb-4">Assigned Dishes</h4>
+            <div class="list-group list-group-flush">
+                {% for dish in cook.dishes.all %}
+                    <a href="{% url 'restourant:dish-detail' pk=dish.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{ dish.name }}</h6>
+                            <small class="text-muted">{{ dish.dish_type.name }}</small>
+                        </div>
+                        <i class="fas fa-chevron-right text-muted"></i>
+                    </a>
+                {% empty %}
+                    <p class="text-muted">This cook has no assigned dishes yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
