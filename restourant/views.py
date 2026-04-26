@@ -140,7 +140,7 @@ class CookUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView
     form_class = CookExperienceUpdateForm
     template_name = "restourant/cook_form.html"
     success_url = reverse_lazy("restourant:cook-list")
-    success_message = "Chef %(username)s has been successfully updated."
+    success_message = "Chef %(years_of_experience)s has been successfully updated."
 
 class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
