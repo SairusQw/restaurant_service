@@ -31,7 +31,7 @@ class CookFormsTests(TestCase):
             "name": "Борщ",
             "price": 150,
             "dish_type": self.dish_type.id,
-            "ingredients": [],  # Порожній список інгредієнтів
+            "ingredients": [],
         }
         form = DishForm(data=form_data)
         self.assertFalse(form.is_valid())

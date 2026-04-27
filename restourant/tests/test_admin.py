@@ -21,7 +21,6 @@ class AdminSiteTests(TestCase):
         )
 
     def test_cook_years_of_experience_listed(self):
-        """Перевірка, чи відображається поле 'years_of_experience' в списку кухарів"""
         url = reverse("admin:restourant_cook_changelist")
         response = self.client.get(url)
 
@@ -50,7 +49,6 @@ class AdminSiteTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_dish_admin_search(self):
-        """Перевірка пошуку в адмінці за назвою страви"""
         from restourant.models import DishType
         dt = DishType.objects.create(name="Soup")
         Dish.objects.create(name="UniqueDishName", price=10, dish_type=dt)

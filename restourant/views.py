@@ -1,31 +1,35 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from restourant.forms import DishForm, CookExperienceUpdateForm, CookCreationForm, DishSearchForm, CookSearchForm, \
-    IngredientSearchForm
+from restourant.forms import (DishForm,
+                              CookExperienceUpdateForm,
+                              CookCreationForm,
+                              DishSearchForm,
+                              CookSearchForm,
+                              IngredientSearchForm
+                              )
+
 from restourant.models import (Cook,
                                Dish,
                                DishType,
                                Ingredient)
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    num_cooks = Cook.objects.count()
-    num_dishes = Dish.objects.count()
-    num_dish_types = DishType.objects.count()
-    num_ingredients = Ingredient.objects.count()
-    context = {
-        "num_cooks": num_cooks,
-        "num_dishes": num_dishes,
-        "num_dish_types": num_dish_types,
-        "num_ingredients": num_ingredients,
-    }
-    return render(request, "restourant/index.html", context)
+class IndexView(generic.TemplateView):
+    template_name = "restourant/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["num_dishes"] = Dish.objects.count()
+        context["num_cooks"] = Cook.objects.count()
+        context["num_ingredients"] = Ingredient.objects.count()
+        context["num_dish_types"] = DishType.objects.count()
+
+        return context
 
 class DishTypeListView(LoginRequiredMixin, generic.ListView):
     model = DishType
@@ -63,13 +67,11 @@ class DishListView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Передаємо форму в шаблон
         name = self.request.GET.get("name", "")
         context["search_form"] = DishSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self):
-        # Отримуємо назву з GET-запиту
         form = DishSearchForm(self.request.GET)
         queryset = Dish.objects.select_related("dish_type")
 
@@ -97,7 +99,6 @@ class CookListView(LoginRequiredMixin, generic.ListView):
         queryset = Cook.objects.all()
         form = CookSearchForm(self.request.GET)
         if form.is_valid():
-            # Шукаємо одночасно по username та прізвищу
             query = form.cleaned_data["username"]
             return queryset.filter(
                 Q(username__icontains=query) | Q(last_name__icontains=query)
@@ -183,5 +184,3 @@ class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Ingredient
     template_name = "restourant/ingredient_confirm_delete.html"
     success_url = reverse_lazy("restourant:ingredient-list")
-
-
