@@ -18,10 +18,9 @@ class IngredientAdmin(admin.ModelAdmin):
     list_display = ("name",)
     search_fields = ("name",)
 
-# Налаштування inlines інгредієнтівб для того щоб додавати продукти у блюді
 class DishIngredientInline(admin.TabularInline):
     model = DishIngredient
-    extra = 1  # Кількість полів для нових інгрідієнтів
+    extra = 1
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
