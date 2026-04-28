@@ -52,3 +52,8 @@ Kitchen Service is a web-based application designed for restaurant teams to mana
    python manage.py runserver
   
 - The tests cover model validation, search filtering, and server-side permission checks for anonymous users.
+
+
+## Demo
+
+![Website Interface](Demo.png)
