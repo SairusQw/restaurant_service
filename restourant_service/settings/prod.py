@@ -16,7 +16,10 @@ DATABASES = {
         "USER": os.environ["POSTGRES_USER"],
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
         "HOST": os.environ["POSTGRES_HOST"],
-        "PORT": int(os.environ["POSTGRES_DB_PORT"]),
+        "PORT": os.environ["POSTGRES_DB_PORT"],
+        "OPTIONS": {
+            "sslmode": "require",
+        }
     }
 }
 
