@@ -56,7 +56,7 @@ Kitchen Service is a web-based application designed for restaurant teams to mana
 ## Test User
 
 - **Login:** admin
-- **Password** 123
+- **Password:** 123
 
 ## Deploying server
 - https://restaurant-service-9jr3.onrender.com
